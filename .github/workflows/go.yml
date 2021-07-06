@@ -31,9 +31,9 @@ jobs:
             Apikey: xxxxxxxxxxxxxx' > $GITHUB_WORKSPACE/download/linux/config.yaml
         echo 'Email: xxxxxxxxxx
             Apikey: xxxxxxxxxxxxxx' > $GITHUB_WORKSPACE/download/windows/config.yaml
-        zip -r $GITHUB_WORKSPACE/xz/darwin.zip $GITHUB_WORKSPACE/download/darwin
-        zip -r $GITHUB_WORKSPACE/xz/linux.zip $GITHUB_WORKSPACE/download/linux
-        zip -r $GITHUB_WORKSPACE/xz/windows.zip $GITHUB_WORKSPACE/download/windows
+        zip -r $GITHUB_WORKSPACE/xz/darwin.zip download/darwin
+        zip -r $GITHUB_WORKSPACE/xz/linux.zip download/linux
+        zip -r $GITHUB_WORKSPACE/xz/windows.zip download/windows
 
     - name: UPX
       if: github.ref == 'refs/heads/master'
