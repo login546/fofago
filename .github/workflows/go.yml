@@ -22,10 +22,13 @@ jobs:
       run: |
         GOARCH=amd64 GOOS=darwin go build -o download/darwin/fofago-darwin main.go
         cp config.yaml /home/runner/work/fofago/fofago/download/darwin/
+        tar -zcvf /download/darwin.tar.gz /download/darwin
         GOARCH=amd64 GOOS=darwin go build -o download/linux/fofago-linux main.go
         cp config.yaml /home/runner/work/fofago/fofago/download/linux/
+        tar -zcvf /download/linux.tar.gz /download/linux
         GOARCH=amd64 GOOS=darwin go build -o download/windows/fofago-windows main.go
         cp config.yaml /home/runner/work/fofago/fofago/download/windows/
+        tar -zcvf /download/windows.tar.gz /download/windows
 
     - name: UPX
       if: github.ref == 'refs/heads/master'
@@ -33,7 +36,6 @@ jobs:
        upx -9 bin/*
 
     - uses: marvinpinto/action-automatic-releases@latest
-      if: github.ref == 'refs/heads/master'
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         prerelease: false
