@@ -40,7 +40,7 @@ GOARCH=amd64 GOOS=windows go build -o fofago-windows.exe main.go
 
 ## 使用
 
-####查询单条语句
+#### 查询单条语句
 
 ~~~bash
 ./fofago -k domain="baidu.com"         Mac下
