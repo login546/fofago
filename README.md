@@ -14,7 +14,9 @@ Fofa批量查询工具
         example -o result.csv
 ~~~
 
+首次使用需修改配置文件config.yaml
 
+输入FOFA的email和key
 
 ## 编译
 
