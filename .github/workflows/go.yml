@@ -1,0 +1,48 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - name: Build
+      run: |
+        mkdir download
+        mkdir xz
+        GOARCH=amd64 GOOS=darwin go build -o $GITHUB_WORKSPACE/download/darwin/fofago-darwin main.go
+        GOARCH=amd64 GOOS=darwin go build -o $GITHUB_WORKSPACE/download/linux/fofago-linux main.go
+        GOARCH=amd64 GOOS=darwin go build -o $GITHUB_WORKSPACE/download/windows/fofago-windows.exe main.go
+        echo 'Email: xxxxxxxxxx
+            Apikey: xxxxxxxxxxxxxx' > $GITHUB_WORKSPACE/download/darwin/config.yaml
+        echo 'Email: xxxxxxxxxx
+            Apikey: xxxxxxxxxxxxxx' > $GITHUB_WORKSPACE/download/linux/config.yaml
+        echo 'Email: xxxxxxxxxx
+            Apikey: xxxxxxxxxxxxxx' > $GITHUB_WORKSPACE/download/windows/config.yaml
+        zip -r $GITHUB_WORKSPACE/xz/darwin.zip download/darwin
+        zip -r $GITHUB_WORKSPACE/xz/linux.zip download/linux
+        zip -r $GITHUB_WORKSPACE/xz/windows.zip download/windows
+
+    - name: UPX
+      if: github.ref == 'refs/heads/master'
+      run: |
+       upx -9 bin/*
+
+    - uses: marvinpinto/action-automatic-releases@latest
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        automatic_release_tag: dev
+        files: xz/
