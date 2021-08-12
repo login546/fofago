@@ -87,10 +87,11 @@ func QueryFofa()  {
 	if len(Allresult.Results) > 0 {
 		arraryTocsv(Allresult.Results)
 	}
+	//fmt.Println(Allresult.Size)
 	if Allresult.Size >10{
-		fofapage1 := Allresult.Size/10
-		fofapage2 := Allresult.Size%10
-		fofapage := fofapage1+fofapage2
+		fofapage1 := Allresult.Size/88
+		fofapage := fofapage1+1
+		//fmt.Println(fofapage)
 		for i:=2;i<fofapage;i++{
 			result, err = clt.QueryAsJSON(uint(i), []byte(*SearchKeyword))
 			if err != nil {
