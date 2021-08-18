@@ -129,7 +129,9 @@ func arraryTocsv(temp [][] string)  {
 	if err == nil{
 		fd,_:=os.OpenFile(*OutputFile,os.O_RDWR|os.O_CREATE|os.O_APPEND,0644)
 		for i:=0;i<tempLen;i++ {
-			rrr := (temp[i][0]+","+temp[i][1]+","+temp[i][2]+","+temp[i][3]+","+temp[i][4]+","+temp[i][5]+","+temp[i][6]+"\n")
+			domaintemp := temp[i][1]
+			a:=HttpFormat(domaintemp)
+			rrr := (temp[i][0]+","+a+","+temp[i][2]+","+temp[i][3]+","+temp[i][4]+","+temp[i][5]+","+temp[i][6]+"\n")
 			fd.Write([]byte(rrr))
 		}
 		return
@@ -148,7 +150,9 @@ func arraryTocsv(temp [][] string)  {
 			}
 			fd,_:=os.OpenFile(*OutputFile,os.O_RDWR|os.O_CREATE|os.O_APPEND,0644)
 			for i:=0;i<tempLen;i++ {
-				rrr := (temp[i][0]+","+temp[i][1]+","+temp[i][2]+","+temp[i][3]+","+temp[i][4]+","+temp[i][5]+","+temp[i][6]+"\n")
+				domaintemp := temp[i][1]
+				a:=HttpFormat(domaintemp)
+				rrr := (temp[i][0]+","+a+","+temp[i][2]+","+temp[i][3]+","+temp[i][4]+","+temp[i][5]+","+temp[i][6]+"\n")
 				fd.Write([]byte(rrr))
 			}
 		}
@@ -184,6 +188,13 @@ func FormatStr2(formatstr2 string){
 	return
 }
 
-
+func HttpFormat(formatstr3 string) string{
+	if strings.Contains(formatstr3,"https://"){
+		return formatstr3
+	}else {
+		formatstr3 = "http://" +formatstr3
+		return formatstr3
+	}
+}
 
 
