@@ -31,7 +31,6 @@ var (
 	SearchKeyword = flag.String("k","","example  -k title=\"百度\"\nexample  -k domain=\"baidu.com\"\nexample  -k 'domain=\"baidu.com\" && city=\"Nanjing\"'\n......\nAnd Support Fofa Other Syntax")
 	SearchFile    = flag.String("f","","example  -f target.txt" )
 	OutputFile    = flag.String("o","","example -o result.csv")
-	//Scfproxy      = flag.String("-scf","","exalple -scf http://127.0.0.1:9999")
 )
 
 func main()  {
@@ -59,7 +58,7 @@ func QueryFofa()  {
 	myConfig:=GetConfig("config.yaml")
 	email := myConfig.Email
 	key := myConfig.Apikey
-	//fmt.Println("登录账号为：",email)
+	fmt.Println("登录账号为：",email)
 	clt := fofa.NewFofaClient([]byte(email), []byte(key))
 	if clt == nil {
 		fmt.Printf("create fofa client\n")
@@ -68,9 +67,6 @@ func QueryFofa()  {
 	var searcccc string
 	searcccc = *SearchKeyword
 	searcccc = strings.Replace(searcccc,`"`,`\"`,-1)
-	//if searcccc ==""{
-	//	return
-	//}
 	result, err := clt.QueryAsJSON(1, []byte(searcccc))
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())
@@ -131,9 +127,6 @@ func arraryTocsv(temp [][] string)  {
 			titletemp = strings.Replace(titletemp,","," ",-1)
 			titletemp = strings.Replace(titletemp,"\n"," ",-1)
 			rrr := (temp[i][0]+","+a+","+temp[i][2]+","+temp[i][3]+","+titletemp+","+temp[i][5]+","+temp[i][6]+"\n")
-			//rrr = FormatStr2(rrr)
-			////rrr = strings.Trim(rrr,"")
-			//rrr = rrr + "\n"
 			fd.Write([]byte(rrr))
 		}
 		return
@@ -158,9 +151,6 @@ func arraryTocsv(temp [][] string)  {
 				titletemp = strings.Replace(titletemp,","," ",-1)
 				titletemp = strings.Replace(titletemp,"\n"," ",-1)
 				rrr := (temp[i][0]+","+a+","+temp[i][2]+","+temp[i][3]+","+titletemp+","+temp[i][5]+","+temp[i][6]+"\n")
-				//rrr = strings.Trim(rrr,"\\n")
-				//rrr = FormatStr2(rrr)
-				//rrr = rrr + "\n"
 				fd.Write([]byte(rrr))
 			}
 		}
