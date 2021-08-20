@@ -18,7 +18,6 @@ type apiconfig struct {
 	Apikey string `yaml:"Apikey,omitempty"`
 }
 
-
 type FofaResult struct {
 	Error   bool       `json:"error"`
 	Mode    string     `json:"mode"`
@@ -27,7 +26,6 @@ type FofaResult struct {
 	Size    int        `json:"size"`
 	Results [][]string `json:"results"`
 }
-
 
 var (
 	SearchKeyword = flag.String("k","","example  -k title=\"百度\"\nexample  -k domain=\"baidu.com\"\nexample  -k 'domain=\"baidu.com\" && city=\"Nanjing\"'\n......\nAnd Support Fofa Other Syntax")
@@ -57,9 +55,7 @@ func main()  {
 	}
 }
 
-
 func QueryFofa()  {
-
 	myConfig:=GetConfig("config.yaml")
 	email := myConfig.Email
 	key := myConfig.Apikey
@@ -71,7 +67,7 @@ func QueryFofa()  {
 	}
 	var searcccc string
 	searcccc = *SearchKeyword
-	FormatStr1(searcccc)
+	searcccc = strings.Replace(searcccc,`"`,`\"`,-1)
 	//if searcccc ==""{
 	//	return
 	//}
@@ -131,7 +127,13 @@ func arraryTocsv(temp [][] string)  {
 		for i:=0;i<tempLen;i++ {
 			domaintemp := temp[i][1]
 			a:=HttpFormat(domaintemp)
-			rrr := (temp[i][0]+","+a+","+temp[i][2]+","+temp[i][3]+","+temp[i][4]+","+temp[i][5]+","+temp[i][6]+"\n")
+			titletemp := temp[i][4]
+			titletemp = strings.Replace(titletemp,","," ",-1)
+			titletemp = strings.Replace(titletemp,"\n"," ",-1)
+			rrr := (temp[i][0]+","+a+","+temp[i][2]+","+temp[i][3]+","+titletemp+","+temp[i][5]+","+temp[i][6]+"\n")
+			//rrr = FormatStr2(rrr)
+			////rrr = strings.Trim(rrr,"")
+			//rrr = rrr + "\n"
 			fd.Write([]byte(rrr))
 		}
 		return
@@ -152,7 +154,13 @@ func arraryTocsv(temp [][] string)  {
 			for i:=0;i<tempLen;i++ {
 				domaintemp := temp[i][1]
 				a:=HttpFormat(domaintemp)
-				rrr := (temp[i][0]+","+a+","+temp[i][2]+","+temp[i][3]+","+temp[i][4]+","+temp[i][5]+","+temp[i][6]+"\n")
+				titletemp := temp[i][4]
+				titletemp = strings.Replace(titletemp,","," ",-1)
+				titletemp = strings.Replace(titletemp,"\n"," ",-1)
+				rrr := (temp[i][0]+","+a+","+temp[i][2]+","+temp[i][3]+","+titletemp+","+temp[i][5]+","+temp[i][6]+"\n")
+				//rrr = strings.Trim(rrr,"\\n")
+				//rrr = FormatStr2(rrr)
+				//rrr = rrr + "\n"
 				fd.Write([]byte(rrr))
 			}
 		}
@@ -162,7 +170,6 @@ func arraryTocsv(temp [][] string)  {
 	return
 
 }
-
 
 func GetConfig(filename string) apiconfig {
 	var configfile apiconfig
@@ -177,15 +184,6 @@ func GetConfig(filename string) apiconfig {
 		os.Exit(1)
 	}
 	return configfile
-}
-
-func FormatStr1(formatstr1 string){
-	strings.Replace(formatstr1,`"`,`\"`,-1)
-	return
-}
-func FormatStr2(formatstr2 string){
-	strings.Replace(formatstr2,`\"`,`"`,-1)
-	return
 }
 
 func HttpFormat(formatstr3 string) string{
