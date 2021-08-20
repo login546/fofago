@@ -126,6 +126,7 @@ func arraryTocsv(temp [][] string)  {
 			titletemp := temp[i][4]
 			titletemp = strings.Replace(titletemp,","," ",-1)
 			titletemp = strings.Replace(titletemp,"\n"," ",-1)
+			titletemp = strings.Replace(titletemp,"        ","",-1)
 			rrr := (temp[i][0]+","+a+","+temp[i][2]+","+temp[i][3]+","+titletemp+","+temp[i][5]+","+temp[i][6]+"\n")
 			fd.Write([]byte(rrr))
 		}
@@ -150,6 +151,7 @@ func arraryTocsv(temp [][] string)  {
 				titletemp := temp[i][4]
 				titletemp = strings.Replace(titletemp,","," ",-1)
 				titletemp = strings.Replace(titletemp,"\n"," ",-1)
+				titletemp = strings.Replace(titletemp,"        ","",-1)
 				rrr := (temp[i][0]+","+a+","+temp[i][2]+","+temp[i][3]+","+titletemp+","+temp[i][5]+","+temp[i][6]+"\n")
 				fd.Write([]byte(rrr))
 			}
