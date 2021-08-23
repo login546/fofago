@@ -58,7 +58,7 @@ func QueryFofa()  {
 	myConfig:=GetConfig("config.yaml")
 	email := myConfig.Email
 	key := myConfig.Apikey
-	fmt.Println("登录账号为：",email)
+	//fmt.Println("登录账号为：",email)
 	clt := fofa.NewFofaClient([]byte(email), []byte(key))
 	if clt == nil {
 		fmt.Printf("create fofa client\n")
@@ -66,7 +66,8 @@ func QueryFofa()  {
 	}
 	var searcccc string
 	searcccc = *SearchKeyword
-	searcccc = strings.Replace(searcccc,`"`,`\"`,-1)
+	searcccc = searcccc + " && (is_honeypot=false && is_fraud=false)"
+	fmt.Println(searcccc)
 	result, err := clt.QueryAsJSON(1, []byte(searcccc))
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())
