@@ -2,13 +2,19 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/fofapro/fofa-go/fofa"
+	"github.com/spaolacci/murmur3"
 	"gopkg.in/yaml.v2"
+	"hash"
 	"io"
 	"io/ioutil"
+	"log"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -31,11 +37,12 @@ var (
 	SearchKeyword = flag.String("k","","example  -k title=\"百度\"\nexample  -k domain=\"baidu.com\"\nexample  -k 'domain=\"baidu.com\" && city=\"Nanjing\"'\n......\nAnd Support Fofa Other Syntax")
 	SearchFile    = flag.String("f","","example  -f target.txt" )
 	OutputFile    = flag.String("o","","example -o result.csv")
+	IconHashCount = flag.String("i","","example -i https://www.baidu.com/favicon.ico")
 )
 
 func main()  {
 	flag.Parse()
-	if (*SearchKeyword =="" && *OutputFile =="" && *SearchFile == "")||(*SearchKeyword !="" && *OutputFile !="" && *SearchFile != ""){
+	if (*SearchKeyword =="" && *OutputFile =="" && *SearchFile == "" && *IconHashCount =="")||(*SearchKeyword !="" && *OutputFile !="" && *SearchFile != "" && *IconHashCount !=""){
 		flag.Usage()
 	}
 	if (*SearchKeyword !="" && *OutputFile != ""){
@@ -51,6 +58,9 @@ func main()  {
 	if (*SearchFile !="" && *OutputFile =="" ){
 		*OutputFile = "result.csv"
 		FofaReadfile()
+	}
+	if *IconHashCount != "" {
+		PrintResult(Mmh3Hash32(IconHash(*IconHashCount)))
 	}
 }
 
@@ -188,4 +198,33 @@ func HttpFormat(formatstr3 string) string{
 	}
 }
 
-
+func IconHash(formatstr4 string) []byte {
+	resp, err := http.Get(formatstr4)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	formatstr4 = base64.StdEncoding.EncodeToString(body)
+	var buffer bytes.Buffer
+	for i := 0; i < len(formatstr4); i++ {
+		ch := formatstr4[i]
+		buffer.WriteByte(ch)
+		if (i+1)%76 == 0 {
+			buffer.WriteByte('\n')
+		}
+	}
+	buffer.WriteByte('\n')
+	return buffer.Bytes()
+}
+func Mmh3Hash32(raw []byte) string {
+	var h32 hash.Hash32 = murmur3.New32()
+	h32.Write([]byte(raw))
+	return fmt.Sprintf("%d", int32(h32.Sum32()))
+}
+func PrintResult(result string) {
+	fmt.Printf("icon_hash=\"%s\"\n", result)
+}

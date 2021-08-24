@@ -4,15 +4,17 @@ Fofa批量查询工具，查询时自动拼接`&& (is_honeypot=false && is_fraud
 
 ~~~
   -f string
-        example  -f target.txt
+    	example  -f target.txt
+  -i string
+    	example -i https://www.baidu.com/favicon.ico
   -k string
-        example  -k 'title="百度"''
-        example  -k 'domain="baidu.com"'
-        example  -k 'domain="baidu.com" && city="Nanjing"'
-        ......
-        And Support Fofa Other Syntax
+    	example  -k 'title="百度"'
+    	example  -k 'domain="baidu.com"'
+    	example  -k 'domain="baidu.com" && city="Nanjing"'
+    	......
+    	And Support Fofa Other Syntax
   -o string
-        example -o result.csv
+    	example -o result.csv
 ~~~
 
 首次使用需修改配置文件config.yaml
@@ -35,6 +37,15 @@ fofago.exe -k 'domain="baidu.com"'       Windows下
 如需指定输出文件名则增加`-o xxxx.csv`
 
 ![image](https://user-images.githubusercontent.com/38073810/130382622-8cf1f3ea-9bb0-4302-84c7-c438113dc8ed.png)
+
+### iconhash计算
+
+~~~bash
+./fofago -i https://www.baidu.com/favicon.ico         Mac下
+fofago.exe -i https://www.baidu.com/favicon.ico       Windows下
+~~~
+
+![image](https://user-images.githubusercontent.com/38073810/130549599-d7e52f50-e5cb-4cce-af90-89ad5feabfcc.png)
 
 ### 查询多条语句
 
