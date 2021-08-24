@@ -60,7 +60,11 @@ func main()  {
 		FofaReadfile()
 	}
 	if *IconHashCount != "" {
-		PrintResult(Mmh3Hash32(IconHash(*IconHashCount)))
+		if strings.Contains(*IconHashCount,"https://") || strings.Contains(*IconHashCount,"http://"){
+			PrintResult(Mmh3Hash32(IconHash(*IconHashCount)))
+		}else{
+			PrintResult(Mmh3Hash32(IconHashFile(*IconHashCount)))
+		}
 	}
 }
 
@@ -227,4 +231,22 @@ func Mmh3Hash32(raw []byte) string {
 }
 func PrintResult(result string) {
 	fmt.Printf("icon_hash=\"%s\"\n", result)
+}
+
+func IconHashFile(path string) []byte{
+	ff, _ := os.Open(path)
+	defer ff.Close()
+	sourcebuffer := make([]byte, 500000)
+	n, _ := ff.Read(sourcebuffer)
+	sourcestring := base64.StdEncoding.EncodeToString(sourcebuffer[:n])
+	var buffer bytes.Buffer
+	for i := 0; i < len(sourcestring); i++ {
+		ch := sourcestring[i]
+		buffer.WriteByte(ch)
+		if (i+1)%76 == 0 {
+			buffer.WriteByte('\n')
+		}
+	}
+	buffer.WriteByte('\n')
+	return buffer.Bytes()
 }

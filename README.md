@@ -47,6 +47,8 @@ fofago.exe -i https://www.baidu.com/favicon.ico       Windows下
 
 ![image](https://user-images.githubusercontent.com/38073810/130549599-d7e52f50-e5cb-4cce-af90-89ad5feabfcc.png)
 
+参考:https://github.com/Becivells/iconhash
+
 ### 查询多条语句
 
 新建一个文本，文本格式每行仅限一条查询语句，如下url.txt
