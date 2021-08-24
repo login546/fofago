@@ -40,12 +40,23 @@ fofago.exe -k 'domain="baidu.com"'       Windows下
 
 ### iconhash计算
 
+#### 远程加载favicon.ico
+
 ~~~bash
 ./fofago -i https://www.baidu.com/favicon.ico         Mac下
 fofago.exe -i https://www.baidu.com/favicon.ico       Windows下
 ~~~
 
 ![image](https://user-images.githubusercontent.com/38073810/130549599-d7e52f50-e5cb-4cce-af90-89ad5feabfcc.png)
+
+#### 本地加载favicon.ico
+
+~~~
+./fofago -i favicon.ico         Mac下
+fofago.exe -i favicon.ico       Windows下
+~~~
+
+![image](https://user-images.githubusercontent.com/38073810/130608478-48090fa2-5f16-497f-83c1-d98ee078dda8.png)
 
 参考:https://github.com/Becivells/iconhash
 
