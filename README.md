@@ -92,6 +92,22 @@ fofago.exe -f url.txt        Windows下
 fofago.exe -f url.txt -o test1.csv       Windows下
 ~~~
 
+## 下载执行程序
+
+### Mac
+
+https://github.com/login546/fofago/releases/download/dev/windows.zip
+
+### Linux
+
+https://github.com/login546/fofago/releases/download/dev/linux.zip
+
+### Windows
+
+https://github.com/login546/fofago/releases/download/dev/windows.zip
+
+
+
 ## 编译
 
 ### Mac
