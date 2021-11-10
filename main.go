@@ -38,6 +38,7 @@ var (
 	SearchFile    = flag.String("f","","example  -f target.txt" )
 	OutputFile    = flag.String("o","","example -o result.csv")
 	IconHashCount = flag.String("i","","example -i https://www.baidu.com/favicon.ico")
+	PageMax	      = flag.Int("p",0,"example -p 100")
 )
 
 func main()  {
@@ -81,7 +82,7 @@ func QueryFofa()  {
 	var searcccc string
 	searcccc = *SearchKeyword
 	searcccc = searcccc + " && (is_honeypot=false && is_fraud=false)"
-	fmt.Println(searcccc)
+	//fmt.Println(searcccc)
 	result, err := clt.QueryAsJSON(1, []byte(searcccc))
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())
@@ -90,25 +91,52 @@ func QueryFofa()  {
 	//fmt.Printf("%s\n", result)
 	Allresult :=FofaResult{}
 	json.Unmarshal(result,&Allresult)
-	fmt.Printf("%s\n", Allresult.Results)
+	//fmt.Println(Allresult.Page)
+	//fmt.Println(Allresult.Size)
+	//fmt.Println(Allresult.Results[0])
+	//fmt.Printf("%s\n", Allresult.Results)
+	//fmt.Printf("↑→→→语法%s，查询到：%d条\n",*SearchKeyword,Allresult.Size)
 	if len(Allresult.Results) > 0 {
 		arraryTocsv(Allresult.Results)
 	}
 	//fmt.Println(Allresult.Size)
-	if Allresult.Size >10{
-		fofapage1 := Allresult.Size/88
-		fofapage := fofapage1+1
-		//fmt.Println(fofapage)
-		for i:=2;i<fofapage;i++{
-			result, err = clt.QueryAsJSON(uint(i), []byte(*SearchKeyword))
-			if err != nil {
-				fmt.Printf("%v\n", err.Error())
+	if *PageMax != 0{
+		if Allresult.Size >10{
+			fofapage1 := Allresult.Size/100
+			fofapage := fofapage1+1
+			if *PageMax > fofapage {
+				*PageMax = fofapage
 			}
-			json.Unmarshal(result,&Allresult)
-			arraryTocsv(Allresult.Results)
-			fmt.Printf("%s\n", Allresult.Results)
+			pagenum := *PageMax
+			for i:=1;i<=pagenum;i++{
+				result, err = clt.QueryAsJSON(uint(i), []byte(*SearchKeyword))
+				if err != nil {
+					fmt.Printf("%v\n", err.Error())
+				}
+				json.Unmarshal(result,&Allresult)
+				arraryTocsv(Allresult.Results)
+				fmt.Printf("%s\n", Allresult.Results)
+				fmt.Printf("↑→→→语法%s，查询到：%d条，共%d页，已设置最大爬取页数为%d页，已查询%d页\n",*SearchKeyword,Allresult.Size,fofapage,*PageMax,i)
+			}
+		}
+	}else if *PageMax == 0 {
+		if Allresult.Size >10{
+			fofapage1 := Allresult.Size/100
+			fofapage := fofapage1+1
+			//fmt.Println(fofapage)
+			for i:=1;i<=fofapage;i++{
+				result, err = clt.QueryAsJSON(uint(i), []byte(*SearchKeyword))
+				if err != nil {
+					fmt.Printf("%v\n", err.Error())
+				}
+				json.Unmarshal(result,&Allresult)
+				arraryTocsv(Allresult.Results)
+				fmt.Printf("%s\n", Allresult.Results)
+				fmt.Printf("↑→语法%s，查询到：%d条，共%d页，已查询%d页\n",*SearchKeyword,Allresult.Size,fofapage,i)
+			}
 		}
 	}
+
 }
 
 func FofaReadfile()  {
