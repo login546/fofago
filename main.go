@@ -35,10 +35,10 @@ type FofaResult struct {
 
 var (
 	SearchKeyword = flag.String("k","","example  -k title=\"百度\"\nexample  -k domain=\"baidu.com\"\nexample  -k 'domain=\"baidu.com\" && city=\"Nanjing\"'\n......\nAnd Support Fofa Other Syntax")
-	SearchFile    = flag.String("f","","example  -f target.txt" )
-	OutputFile    = flag.String("o","","example -o result.csv")
-	IconHashCount = flag.String("i","","example -i https://www.baidu.com/favicon.ico")
-	PageMax	      = flag.Int("p",0,"example -p 100")
+	SearchFile    = flag.String("f","","example  -f target.txt (批量爬取语法)" )
+	OutputFile    = flag.String("o","","example -o result.csv (指定输出到xxx.csv文件，如未添加此参数，默认输出到result.csv)")
+	IconHashCount = flag.String("i","","example -i https://www.baidu.com/favicon.ico (计算远程favicon.ico的hash值)\nexample -i favicon.ico (计算本地favicon.ico的hash值)")
+	PageMax	      = flag.Int("p",0,"example -p 100 (可用此参数设置最大爬取页数，默认爬取所有结果时，无需加此参数)")
 )
 
 func main()  {

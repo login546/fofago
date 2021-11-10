@@ -4,17 +4,20 @@ Fofa批量查询工具，查询时自动拼接`&& (is_honeypot=false && is_fraud
 
 ~~~
   -f string
-    	example  -f target.txt
+    	example  -f target.txt (批量爬取语法)
   -i string
-    	example -i https://www.baidu.com/favicon.ico
+    	example -i https://www.baidu.com/favicon.ico (计算远程favicon.ico的hash值)
+    	example -i favicon.ico (计算本地favicon.ico的hash值)
   -k string
-    	example  -k 'title="百度"'
-    	example  -k 'domain="baidu.com"'
+    	example  -k title="百度"
+    	example  -k domain="baidu.com"
     	example  -k 'domain="baidu.com" && city="Nanjing"'
     	......
     	And Support Fofa Other Syntax
   -o string
-    	example -o result.csv
+    	example -o result.csv (指定输出到xxx.csv文件，如未添加此参数，默认输出到result.csv)
+  -p int
+    	example -p 100 (可用此参数设置最大爬取页数，默认爬取所有结果时，无需加此参数)
 ~~~
 
 首次使用需修改配置文件config.yaml
