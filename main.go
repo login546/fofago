@@ -114,8 +114,9 @@ func QueryFofa()  {
 					fmt.Printf("%v\n", err.Error())
 				}
 				json.Unmarshal(result,&Allresult)
+				fmt.Printf("%s\n", PrintFormat(string(result)))
 				arraryTocsv(Allresult.Results)
-				fmt.Printf("%s\n", Allresult.Results)
+				//fmt.Printf("%s\n", Allresult.Results)
 				fmt.Printf("↑→→→语法%s，查询到：%d条，共%d页，已设置最大爬取页数为%d页，已查询%d页\n",*SearchKeyword,Allresult.Size,fofapage,*PageMax,i)
 			}
 		}
@@ -130,8 +131,9 @@ func QueryFofa()  {
 					fmt.Printf("%v\n", err.Error())
 				}
 				json.Unmarshal(result,&Allresult)
+				fmt.Printf("%s\n", PrintFormat(string(result)))
 				arraryTocsv(Allresult.Results)
-				fmt.Printf("%s\n", Allresult.Results)
+				//fmt.Printf("%s\n", Allresult.Results)
 				fmt.Printf("↑→语法%s，查询到：%d条，共%d页，已查询%d页\n",*SearchKeyword,Allresult.Size,fofapage,i)
 			}
 		}
@@ -228,6 +230,11 @@ func HttpFormat(formatstr3 string) string{
 		formatstr3 = "http://" +formatstr3
 		return formatstr3
 	}
+}
+
+func PrintFormat(formatstr5 string) string{
+	formatstr5 = strings.Replace(formatstr5,"],[","]\n[",-1)
+	return formatstr5
 }
 
 func IconHash(formatstr4 string) []byte {

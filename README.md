@@ -33,7 +33,7 @@ Fofa批量查询工具，查询时自动拼接`&& (is_honeypot=false && is_fraud
 fofago.exe -k 'domain="baidu.com"'       Windows下
 ~~~
 
-![image](https://user-images.githubusercontent.com/38073810/130382551-0eaa0d10-fcf3-4aa9-819c-7c0cbe6ffa8b.png)
+![image](https://user-images.githubusercontent.com/38073810/149788331-9305659d-bb6c-42f3-b113-07a1033bfe75.png)
 
 同时会在本地生成result.csv
 
