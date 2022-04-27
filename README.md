@@ -1,5 +1,20 @@
 # fofago
 
+已将Releases 里 GO Modules 的 fofa.so 更新为 fofa.info ，并编译，可直接下载使用，或自行修改。
+
+~~~
+Mac
+https://github.com/login546/fofago/releases/download/fofa.info%E7%89%88%E6%9C%AC/mac.zip
+
+Linux
+https://github.com/login546/fofago/releases/download/fofa.info%E7%89%88%E6%9C%AC/linux.zip
+
+Windows
+https://github.com/login546/fofago/releases/download/fofa.info%E7%89%88%E6%9C%AC/windows.zip
+~~~
+
+
+
 Fofa批量查询工具，查询时自动拼接`&& (is_honeypot=false && is_fraud=false)`排除干扰资产。
 
 ~~~
